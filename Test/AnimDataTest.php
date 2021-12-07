@@ -38,7 +38,7 @@ class AnimDataTest
             ]
         );
 
-        $totalRows = static::dumpAnimDataRow($excelIterator, $animDataCollection, $animDataHandler);
+        $totalRows = static::dumpAnimDataRow($animDataHandler, $excelIterator, $animDataCollection);
 
         if ($totalRows !== 856) {
             die(' ERROR: Invalid total row number!');
@@ -47,14 +47,9 @@ class AnimDataTest
         exit(' DONE');
     }
 
-    private static function dumpAnimDataRow(ExcelIterator $excelIterator, AnimDataCollectionInterface $animDataCollection, AnimDataHandlerInterface $animDataHandler): int
+    private static function dumpAnimDataRow(AnimDataHandlerInterface $animDataHandler, ExcelIterator $excelIterator, AnimDataCollectionInterface $animDataCollection): int
     {
-        // for each file row do extra work with iterator:
-        foreach ($excelIterator as $rowData) {
-            // $rowData validation here
-            
-            $animDataHandler->addRowDataToCollection($animDataCollection, $rowData);
-        }
+        $animDataHandler->handle($excelIterator, $animDataCollection);
 
         $totalRows = $animDataCollection->count();
         
