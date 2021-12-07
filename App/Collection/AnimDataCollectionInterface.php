@@ -6,17 +6,14 @@ namespace App\Collection;
 
 use App\Documentation\Table\Model\AnimData;
 
-interface AnimDataCollectionInterface
+interface AnimDataCollectionInterface extends RowCollectionInterface
 {
+    public function add(AnimData $animData): void;
+
     public function get(int $index): AnimData;
 
+    /**
+     * @return AnimData[]
+     */
     public function getAll(): array;
-
-    public function pop(bool $resetIndex = true): void;
-
-    public function remove(int $index, bool $resetIndex = true): void;
-
-    public function resetIndex(): void;
-
-    public function isEmpty(): bool;
 }

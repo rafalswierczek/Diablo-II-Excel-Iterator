@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\Collection\Iterator;
 
 use App\Documentation\Table\Model\RowInterface;
-use App\Collection\RowCollection;
+use App\Collection\RowCollectionInterface;
 
-class RowIterator implements \Iterator
+class TableIterator implements \Iterator
 {
     /**
      * @var RowInterface[]
      */
     private array $table = [];
-    private RowCollection $rowCollection;
+    private RowCollectionInterface $rowCollection;
 
-    public function __construct(RowCollection $rowCollection)
+    public function __construct(RowCollectionInterface $rowCollection)
     {
         $this->rowCollection = $rowCollection;
     }

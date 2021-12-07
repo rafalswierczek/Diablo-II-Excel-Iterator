@@ -5,25 +5,44 @@ declare(strict_types=1);
 namespace App\Collection;
 
 use App\Documentation\Table\Model\AnimData;
+use App\Collection\Iterator\TableIterator;
 
-abstract class AnimDataCollection implements \IteratorAggregate, \Countable, AnimDataCollectionInterface
+final class AnimDataCollection implements \IteratorAggregate, \Countable, AnimDataCollectionInterface
 {
-    protected array $elements = [];
+    /**
+     * @var AnimData[]
+     */
+    protected array $animDataList = [];
     protected \Iterator $iterator;
+
+    public function __construct()
+    {
+        $this->iterator = new TableIterator($this);
+    }
+
+    public function getIterator(): TableIterator
+    {
+        return $this->iterator;
+    }
+
+    public function add(AnimData $animData): void
+    {
+        $this->animDataList[] = $animData;
+    }
 
     public function get(int $index): AnimData
     {
-        return $this->elements[$index];
+        return $this->animDataList[$index];
     }
 
     public function getAll(): array
     {
-        return $this->elements;
+        return $this->animDataList;
     }
 
     public function pop(bool $resetIndex = true): void
     {
-        unset($this->elements[count($this->elements) - 1]);
+        unset($this->animDataList[count($this->animDataList) - 1]);
 
         if ($resetIndex) {
             $this->resetIndex();
@@ -32,7 +51,7 @@ abstract class AnimDataCollection implements \IteratorAggregate, \Countable, Ani
 
     public function remove(int $index, bool $resetIndex = true): void
     {
-        unset($this->elements[$index]);
+        unset($this->animDataList[$index]);
 
         if ($resetIndex) {
             $this->resetIndex();
@@ -41,16 +60,16 @@ abstract class AnimDataCollection implements \IteratorAggregate, \Countable, Ani
 
     public function count(): int
     {
-        return count($this->elements);
+        return count($this->animDataList);
     }
 
     public function resetIndex(): void
     {
-        $this->elements = array_values($this->elements);
+        $this->animDataList = array_values($this->animDataList);
     }
 
     public function isEmpty(): bool
     {
-        return empty($this->elements) ? true : false;
+        return empty($this->animDataList);
     }
 }
