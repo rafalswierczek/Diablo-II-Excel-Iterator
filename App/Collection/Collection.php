@@ -1,14 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Collection;
 
-abstract class Collection implements \IteratorAggregate, \Countable, CollectionInterface
+use App\Documentation\Table\Model\AnimData;
+
+abstract class AnimDataCollection implements \IteratorAggregate, \Countable, AnimDataCollectionInterface
 {
     protected array $elements = [];
-
     protected \Iterator $iterator;
 
-    public function get(int $index)
+    public function get(int $index): AnimData
     {
         return $this->elements[$index];
     }
@@ -18,20 +21,22 @@ abstract class Collection implements \IteratorAggregate, \Countable, CollectionI
         return $this->elements;
     }
 
-    public function pop(bool $resetIndex = true)
+    public function pop(bool $resetIndex = true): void
     {
         unset($this->elements[count($this->elements) - 1]);
 
-        if($resetIndex)
+        if ($resetIndex) {
             $this->resetIndex();
+        }
     }
 
-    public function remove(int $index, bool $resetIndex = true)
+    public function remove(int $index, bool $resetIndex = true): void
     {
         unset($this->elements[$index]);
 
-        if($resetIndex)
+        if ($resetIndex) {
             $this->resetIndex();
+        }
     }
 
     public function count(): int
@@ -39,7 +44,7 @@ abstract class Collection implements \IteratorAggregate, \Countable, CollectionI
         return count($this->elements);
     }
 
-    public function resetIndex()
+    public function resetIndex(): void
     {
         $this->elements = array_values($this->elements);
     }

@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace App\Entity\Documentation\Row;
+declare(strict_types=1);
 
-use App\Service\Documentation\Enum\AnimDataEnum;
+namespace App\Documentation\Table\Model;
 
-class AnimData implements AnimDataEnum, RowInterface
+use App\Documentation\Header\AnimDataHeader;
+
+class AnimData implements AnimDataHeader, RowInterface
 {
     private string $characterCode;
     private string $attackMode;
@@ -14,7 +16,11 @@ class AnimData implements AnimDataEnum, RowInterface
 
     public function getUniqueKey(): array
     {
-        return ['character_code' => $this->getCharacterCode(), 'attack_mode' => $this->getAttackMode(), 'wclass' => $this->getWclass()];
+        return [
+            'character_code' => $this->getCharacterCode(),
+            'attack_mode' => $this->getAttackMode(),
+            'wclass' => $this->getWclass()
+        ];
     }
 
     public function getCofName(): string
@@ -25,8 +31,10 @@ class AnimData implements AnimDataEnum, RowInterface
     public function setCharacterCode(string $characterCode): self
     {
         $this->characterCode = $characterCode;
+
         return $this;
     }
+
     public function getCharacterCode(): string
     {
         return $this->characterCode;
@@ -35,8 +43,10 @@ class AnimData implements AnimDataEnum, RowInterface
     public function setAttackMode(string $attackMode): self
     {
         $this->attackMode = $attackMode;
+
         return $this;
     }
+
     public function getAttackMode(): string
     {
         return $this->attackMode;
@@ -45,8 +55,10 @@ class AnimData implements AnimDataEnum, RowInterface
     public function setWclass(string $wclass): self
     {
         $this->wclass = $wclass;
+
         return $this;
     }
+
     public function getWclass(): string
     {
         return $this->wclass;
@@ -55,8 +67,10 @@ class AnimData implements AnimDataEnum, RowInterface
     public function setFramesPerDirection(int $framesPerDirection): self
     {
         $this->framesPerDirection = $framesPerDirection;
+
         return $this;
     }
+
     public function getFramesPerDirection(): int
     {
         return $this->framesPerDirection;
@@ -65,8 +79,10 @@ class AnimData implements AnimDataEnum, RowInterface
     public function setAnimationSpeed(int $animationSpeed): self
     {
         $this->animationSpeed = $animationSpeed;
+
         return $this;
     }
+
     public function getAnimationSpeed(): int
     {
         return $this->animationSpeed;

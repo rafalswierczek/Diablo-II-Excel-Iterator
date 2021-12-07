@@ -1,9 +1,13 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace App\Service\Documentation\Enum;
+declare(strict_types=1);
 
-interface AnimDataEnum
+namespace App\Documentation\Header;
+
+interface AnimDataHeader
 {
+    const FILE_NAME = 'AnimData.txt';
+
     const CHARACTER_CODE = ['AM', 'AI', 'NE', 'BA', 'PA', 'SO', 'DZ'];
 
     const ATTACK_MODE = ['A1', 'TH'];
@@ -13,11 +17,5 @@ interface AnimDataEnum
     /**
      * Randomly ordered array of column names from header row from FILE_NAME file
      */
-    const COLUMN_NAMES = [
-        'CofName',
-        'FramesPerDirection',
-        'AnimationSpeed'
-    ];
-
-    const FILE_NAME = 'AnimData.txt';
+    const COLUMN_NAMES = ['CofName', 'FramesPerDirection', 'AnimationSpeed'];
 }

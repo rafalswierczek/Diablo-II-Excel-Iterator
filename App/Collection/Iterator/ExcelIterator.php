@@ -2,7 +2,7 @@
 
 namespace App\Collection\Iterator;
 
-use App\Service\Validation\TableValidator;
+use App\Validation\TableValidator;
 
 class ExcelIterator implements \Iterator
 {
@@ -33,13 +33,12 @@ class ExcelIterator implements \Iterator
     {
         $this->invalidHeader = false;
 
-        if(!$this->tableValidator->headerHasDuplicateColumnNames($this->fileHeader, $this->fileName))
-        {
+        if (!$this->tableValidator->headerHasDuplicateColumnNames($this->fileHeader, $this->fileName)) {
             if(!$this->tableValidator->headerHasAllNecessaryColumns($this->fileHeader, $this->columnNames, $this->fileName))
                 $this->invalidHeader = true;
-        }
-        else
+        } else {
             $this->invalidHeader = true;
+        }
 
         reset($this->fileLines);
 
@@ -51,6 +50,7 @@ class ExcelIterator implements \Iterator
     public function current(): array
     {
         $this->table[] = $this->row;
+
         return $this->row;
     }
 
@@ -63,21 +63,21 @@ class ExcelIterator implements \Iterator
     {
         do {
             next($this->fileLines);
-        }
-        while($this->continue());
+        } while($this->continue());
     }
 
     public function valid(): bool
     {
-        if(null === $this->row) // end of file or validation error
-        {
+        if (null === $this->row) { // end of file or validation error
             $this->tableValidator->isEmptyTable($this->table, $this->fileName);
+
             return false;
         }
 
-        // sadly it's most likely necessary to check valid header each iteration because only valid method can stop the loop in normal way
-        if($this->invalidHeader || [] === $this->row) // invalid header OR row has invalid column quantity
+        // it's most likely necessary to check valid header each iteration because only valid method can stop the loop in normal way
+        if ($this->invalidHeader || [] === $this->row) { // invalid header OR row has invalid column quantity
             return false;
+        }
 
         return true;
     }
@@ -86,13 +86,14 @@ class ExcelIterator implements \Iterator
     {
         $this->row = $this->getRow();
 
-        if(null === $this->row)
+        if (null === $this->row) {
             return false;
+        }
         
-        foreach($this->skipColumnValues as $columnName => $columnValues)
-        {
-            if(in_array($this->row[$columnName] ?? null, $columnValues))
+        foreach ($this->skipColumnValues as $columnName => $columnValues) {
+            if (in_array($this->row[$columnName] ?? null, $columnValues)) {
                 return true;
+            }
         }
 
         return false;
@@ -100,13 +101,15 @@ class ExcelIterator implements \Iterator
 
     private function getRow(): ?array
     {
-        if((false === $current = current($this->fileLines)) || empty($current)) // end of file
+        if ((false === $current = current($this->fileLines)) || empty($current)) { // end of file
             return null;
+        }
             
         $row = array_map('trim', explode("	", $current)); // explode returns always not empty array
 
-        if($this->tableValidator->rowHasInvalidColumnQuantity($row, $this->fileHeader, $this->fileName, (key($this->fileLines) + 1)))
+        if ($this->tableValidator->rowHasInvalidColumnQuantity($row, $this->fileHeader, $this->fileName, (key($this->fileLines) + 1))) {
             return null;
+        }
 
         $row = array_combine($this->fileHeader, $row);
 

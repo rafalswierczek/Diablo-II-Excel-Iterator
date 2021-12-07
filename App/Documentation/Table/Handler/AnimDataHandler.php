@@ -1,15 +1,17 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace App\Service\Documentation\Table\Handler;
+declare(strict_types=1);
 
-use App\Entity\Documentation\Row\AnimData;
+namespace App\Documentation\Table\Handler;
+
+use App\Documentation\Table\Model\AnimData;
 use App\Collection\RowCollection;
 
 final class AnimDataHandler
 {
     public function addRowToCollection(RowCollection $rowCollection, array $row): void
     {
-        $characterCode = substr($row['CofName'], 0, 2) ?: ''; // PHP 8, remove:  ?: '' 
+        $characterCode = substr($row['CofName'], 0, 2) ?: '';
         $attackMode = substr($row['CofName'], 2, 2) ?: '';
         $wclass = substr($row['CofName'], 4, 3) ?: '';
 

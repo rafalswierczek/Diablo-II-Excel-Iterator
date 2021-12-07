@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Collection;
 
-use App\Entity\Documentation\Row\RowInterface;
+use App\Documentation\Table\Model\RowInterface;
 use App\Collection\Iterator\RowIterator;
 
-class RowCollection extends Collection
+class RowCollection extends AnimDataCollection
 {
     public function __construct()
     {

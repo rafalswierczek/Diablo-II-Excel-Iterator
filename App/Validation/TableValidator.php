@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace App\Service\Validation;
+declare(strict_types=1);
+
+namespace App\Validation;
 
 class TableValidator
 {
@@ -27,9 +29,9 @@ class TableValidator
 
     public function headerHasDuplicateColumnNames(array $header, string $fileName): bool
     {
-        if(!empty($duplicateColumnNames = $this->getDuplicateValues($header)))
-        {
+        if (!empty($duplicateColumnNames = $this->getDuplicateValues($header))) {
             var_dump(['fileName' => $fileName, 'duplicateColumnNames' => implode(', ', $duplicateColumnNames)]); // your notification handler here
+
             return true;
         }
 
@@ -43,17 +45,15 @@ class TableValidator
     {
         $missingColumnNames = [];
         
-        foreach($columnNames as $columnName)
-        {
-            if(!in_array($columnName, $header))
-            {
+        foreach ($columnNames as $columnName) {
+            if (!in_array($columnName, $header)) {
                 $missingColumnNames[] = $columnName;
             }
         }
         
-        if($missingColumnNames)
-        {
+        if ($missingColumnNames) {
             var_dump(['fileName' => $fileName, 'columnNames' => implode(', ', $missingColumnNames)]); // your notification handler here
+
             return false;
         }
         
@@ -62,9 +62,9 @@ class TableValidator
 
     public function rowHasInvalidColumnQuantity(array $row, array $header, string $fileName, int $rowIndex): bool
     {
-        if(count($header) !== count($row))
-        {
+        if (count($header) !== count($row)) {
             var_dump(['fileName' => $fileName, 'rowIndex' => $rowIndex]); // your notification handler here
+
             return true;
         }
 
@@ -73,9 +73,9 @@ class TableValidator
 
     public function isEmptyTable(array $table, string $fileName): bool
     {
-        if(empty($table))
-        {
+        if (empty($table)) {
             var_dump(['fileName' => $fileName]); // your notification handler here
+
             return true;
         }
 

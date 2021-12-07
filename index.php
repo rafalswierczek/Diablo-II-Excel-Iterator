@@ -1,14 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 spl_autoload_register(function ($class_name) {
     require str_replace('\\', '/', "$class_name.php");
 });
 
-use App\Service\Documentation\Table\Handler\AnimDataHandler;
-use App\Entity\Documentation\Row\AnimData;
+use App\Documentation\Table\Handler\AnimDataHandler;
+use App\Documentation\Table\Model\AnimData;
 use App\Collection\Iterator\ExcelIterator;
 use App\Collection\RowCollection;
-use App\Service\Validation\TableValidator;
+use App\Validation\TableValidator;
 
 class ExcelIteratorTest
 {
@@ -27,8 +29,7 @@ class ExcelIteratorTest
         $animDataHandler = new AnimDataHandler();
     
         // for each file row do extra work with iterator:
-        foreach($excelIterator as $row)
-        {
+        foreach ($excelIterator as $row) {
             $animDataHandler->addRowToCollection($rowCollection, $row);
         }
 
@@ -39,8 +40,7 @@ class ExcelIteratorTest
          * 
          * @var AnimData $entity
          * */
-        foreach($rowCollection as $i => $entity)
-        {
+        foreach ($rowCollection as $i => $entity) {
             print_r(($i+1)."/$totalRows | entity PK: ".$entity->getCofName()." | AnimationSpeed: " . $entity->getAnimationSpeed()."\n");
         }
     

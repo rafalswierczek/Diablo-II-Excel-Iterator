@@ -1,13 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Collection\Iterator;
 
-use App\Entity\Documentation\Row\RowInterface;
+use App\Documentation\Table\Model\RowInterface;
 use App\Collection\RowCollection;
 
 class RowIterator implements \Iterator
 {
-    /** @var array|RowInterface $table */
+    /**
+     * @var RowInterface[]
+     */
     private array $table = [];
     private RowCollection $rowCollection;
 
@@ -16,9 +20,10 @@ class RowIterator implements \Iterator
         $this->rowCollection = $rowCollection;
     }
 
-    public function rewind() 
+    public function rewind(): void
     {
         $this->table = $this->rowCollection->getAll();
+        
         reset($this->table);
     }
 
@@ -27,12 +32,12 @@ class RowIterator implements \Iterator
         return current($this->table);
     }
 
-    public function key()
+    public function key(): int
     {
         return key($this->table);
     }
 
-    public function next()
+    public function next(): void
     {
         next($this->table);
     }
